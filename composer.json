@@ -1,0 +1,21 @@
+{
+    "name": "innologica/yii2-insight-core",
+    "description": "Insight core classes for insight system",
+    "type": "yii2-extension",
+    "keywords": ["yii2","module"," insight"," core"],
+    "license": "BSD-4-Clause",
+    "authors": [
+        {
+            "name": "Nikola Kostadinov",
+            "email": "nkostadinov@innologica.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "insight\\core\\": ""
+        }
+    }
+}

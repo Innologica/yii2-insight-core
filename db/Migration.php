@@ -7,7 +7,15 @@
 
 namespace insight\core\db;
 
+use yii\console\Exception;
 
 class Migration extends \yii\db\Migration{
-
+    public function getTableOptions()
+    {
+        if ($this->db->driverName === 'mysql') {
+            // http://stackoverflow.com/questions/766809/whats-the-difference-between-utf8-general-ci-and-utf8-unicode-ci
+            return 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
+        } else
+            throw new Exception('Unsupported database.');
+    }
 }

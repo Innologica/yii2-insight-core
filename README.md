@@ -1,6 +1,6 @@
 Insight core classes
 ====================
-Insight core classes for insight system
+Insight core classes for insight eco system.
 
 Installation
 ------------
@@ -25,7 +25,4 @@ to the require section of your `composer.json` file.
 Usage
 -----
 
-Once the extension is installed, simply use it in your code by  :
-
-```php
-<?= \insight\core\AutoloadExample::widget(); ?>```
+Once the extension is installed, simply extend the base classes where needed.

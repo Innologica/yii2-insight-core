@@ -10,6 +10,7 @@ namespace insight\core\web;
 
 class Controller extends \yii\web\Controller
 {
+    public $access = [];
     /**
      * Checks if an ajax request is made and makes partial render.
      *
@@ -24,5 +25,21 @@ class Controller extends \yii\web\Controller
         else
             return parent::render($view, $params);
     }
+
+    public function behaviors()
+    {
+        if(!empty($this->access)) {
+            $access = [
+                'access' => $this->access
+            ];
+        } else
+            $access = [];
+
+        return array_merge(
+            $access,
+            parent::behaviors()
+        );
+    }
+
 
 }

@@ -2,7 +2,7 @@
 /**
  * @author Nikola Kostadinov<nikolakk@gmail.com>
  * Date: 11.12.2015
- * Time: 12:09 ÷.
+ * Time: 12:09 Ñ‡.
  */
 
 namespace insight\core\web;

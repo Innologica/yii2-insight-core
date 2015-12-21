@@ -8,6 +8,10 @@
 namespace insight\core\web;
 
 
+use Yii;
+use yii\helpers\Url;
+use yii\web\Response;
+
 class Controller extends \yii\web\Controller
 {
     public $access = [];

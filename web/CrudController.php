@@ -30,8 +30,8 @@ class CrudController extends Controller
      */
     public function load($id)
     {
-        $model = call_user_func([ $this->modelClass, 'findOne'], $id);
-        if(!isset($model))
+        $model = call_user_func([$this->modelClass, 'findOne'], $id);
+        if (!isset($model))
             throw new NotFoundHttpException();
         return $model;
     }
@@ -41,11 +41,11 @@ class CrudController extends Controller
         $model = Yii::createObject($this->modelClass);
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-            if( Yii::$app->request->get('validate') ) {
+            if (Yii::$app->request->get('validate')) {
                 return ActiveForm::validate($model);
             }
             $model->save();
-            return [ 'url' => '#' . Url::to(['index']) ];
+            return ['url' => '#' . Url::to(['index'])];
         }
         return $this->render('_form', compact('model'));
     }
@@ -55,11 +55,11 @@ class CrudController extends Controller
         $model = $this->load($id);
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-            if( Yii::$app->request->get('validate') ) {
+            if (Yii::$app->request->get('validate')) {
                 return ActiveForm::validate($model);
             }
             $model->save();
-            return [ 'url' => '#' . Url::to(['index']) ];
+            return ['url' => '#' . Url::to(['index'])];
         }
         return $this->render('_form', compact('model'));
     }
@@ -73,10 +73,15 @@ class CrudController extends Controller
 
     public function actionIndex()
     {
+        return $this->render('index', $this->getIndexData());
+    }
+
+    protected function getIndexData()
+    {
         $dataProvider = new ActiveDataProvider([
             'query' => call_user_func([$this->modelClass, 'find']),
         ]);
-        return $this->render('index', compact('dataProvider'));
+        return compact('dataProvider');
     }
 
     public function actionView($id)

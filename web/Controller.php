@@ -20,14 +20,28 @@ class Controller extends \yii\web\Controller
      *
      * @param string $view
      * @param array $params
-     * @return string
+     * @return View
      */
     public function render($view, $params = [])
     {
-        if(\Yii::$app->request->isAjax)
-            return parent::renderAjax($view, $params);
-        else
-            return parent::render($view, $params);
+        $view = new View([
+            'viewFile' => $view,
+            'params' => $params,
+        ]);
+        return $view;
+    }
+
+    public function runAction($id, $params = [])
+    {
+        $result = parent::runAction($id, $params);
+        if($result instanceof View) {
+            if (\Yii::$app->request->isAjax) {
+                $result = parent::renderAjax($result->viewFile, $result->params);
+            } else {
+                $result = parent::render($result->viewFile, $result->params);
+            }
+        }
+        return $result;
     }
 
     public function behaviors()

@@ -48,4 +48,8 @@ class DateTimeUtil extends Object
         return $timezones;
     }
 
+    public static function toDate($date, $format = 'yyyy-MM-dd')
+    {
+        return \Yii::$app->formatter->asDate($date, $format);
+    }
 }

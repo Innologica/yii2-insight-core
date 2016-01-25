@@ -10,8 +10,26 @@ namespace insight\core\components;
 use Yii;
 use yii\base\Component;
 
+/**
+ * Common functionalities to all Insight components.
+ */
 class BaseComponent extends Component
 {
+    /**
+     * Finds a setting by its id.
+     *
+     * The settings for all modules must be declared in the module's core component like this:
+     * ```php
+     * public static $settings = [
+     *      'settingKey1' => 'Value 1',
+     *      'settingKey2' => 'Value 2',
+     *      ...
+     * ];
+     * ```
+     *
+     * @param string $key The key of the setting
+     * @return string|bool The setting if found, false if not
+     */
     public function getSettings($key)
     {
         $value = Yii::$app->registry->get($key, Yii::$app->user->id);

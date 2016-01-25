@@ -27,16 +27,15 @@ class BaseComponent extends Component
      * ];
      * ```
      *
-     * @param string $key The key of the setting
-     * @return string|bool The setting if found, false if not
+     * @param string $key The key of the setting.
+     * @param integer $userId A user's id. By default is NULL.
+     * @return string|bool The setting if found, false if not.
      */
-    public function getSettings($key)
+    public function getSettings($key, $userId = null)
     {
-        $value = Yii::$app->registry->get($key, Yii::$app->user->id);
-        if (!$value) {
-            if (isset(static::$settings[$key])) {
-                return static::$settings[$key];
-            }
+        $value = Yii::$app->registry->get($key, $userId);
+        if (!$value && isset(static::$settings[$key])) {
+            return static::$settings[$key];
         }
         return $value;
     }

@@ -34,7 +34,7 @@ class BaseComponent extends Component
     public function getSettings($key, $userId = null)
     {
         $value = Yii::$app->registry->get($key, $userId);
-        if (!$value && isset(static::$settings[$key])) {
+        if (!isset($value) && isset(static::$settings[$key])) {
             return static::$settings[$key];
         }
         return $value;

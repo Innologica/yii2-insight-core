@@ -3,17 +3,15 @@
  * Created by PhpStorm.
  * User: Nikola nb
  * Date: 16.12.2015
- * Time: 21:41 ÷.
+ * Time: 21:41 ï¿½.
  */
 
 namespace insight\core\web;
-
 
 use Yii;
 use yii\bootstrap\ActiveForm;
 use yii\data\ActiveDataProvider;
 use yii\db\ActiveRecord;
-use yii\di\Instance;
 use yii\helpers\Url;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -44,10 +42,15 @@ class CrudController extends Controller
             if (Yii::$app->request->get('validate')) {
                 return ActiveForm::validate($model);
             }
+            $this->beforeSave($model);
             $model->save();
+            $this->afterSave($model);
+            
             return ['url' => '#' . Url::to(['index'])];
         }
-        return $this->render('_form', compact('model'));
+        
+        $params = array_merge(['model' => $model], $this->beforeRender($model));
+        return $this->render('_form', $params);
     }
 
     public function actionUpdate($id)
@@ -58,10 +61,15 @@ class CrudController extends Controller
             if (Yii::$app->request->get('validate')) {
                 return ActiveForm::validate($model);
             }
+            $this->beforeSave($model);
             $model->save();
+            $this->afterSave($model);
+            
             return ['url' => '#' . Url::to(['index'])];
         }
-        return $this->render('_form', compact('model'));
+        
+        $params = array_merge(['model' => $model], $this->beforeRender($model));
+        return $this->render('_form', $params);
     }
 
     public function actionDelete($id)
@@ -90,4 +98,16 @@ class CrudController extends Controller
         return $this->render('view', compact('model', 'tokens'));
     }
 
+    protected function beforeSave($model)
+    {
+    }
+
+    protected function afterSave($model)
+    {
+    }
+
+    protected function beforeRender($model)
+    {
+        return [];
+    }
 }

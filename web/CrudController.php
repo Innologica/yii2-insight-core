@@ -66,14 +66,14 @@ class CrudController extends Controller
     public function actionDelete($id)
     {
         $this->delete($id);
-        return ['url' => '#' . Url::to(['index'])];
+        return $this->redirect('/#' . Url::to(['index']));
     }
 
     protected function getData($model = null)
     {
-        if ($model) {
+        if ($model)
             return [];
-        }
+        
         return [
             'dataProvider' => new ActiveDataProvider([
                 'query' => call_user_func([$this->modelClass, 'find']),

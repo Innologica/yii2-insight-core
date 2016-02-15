@@ -9,6 +9,7 @@ namespace insight\core\util;
 
 use DateTime;
 use DateTimeZone;
+use Yii;
 use yii\base\Object;
 
 class DateTimeUtil extends Object
@@ -50,6 +51,19 @@ class DateTimeUtil extends Object
 
     public static function toDate($date, $format = 'yyyy-MM-dd')
     {
-        return \Yii::$app->formatter->asDate($date, $format);
+        return Yii::$app->formatter->asDate($date, $format);
+    }
+
+    public static function listWeekdays()
+    {
+        Yii::$app->language = 'ru';
+        $timestamp = strtotime('next Sunday');
+        $days = array();
+        for ($i = 0; $i < 7; $i++) {
+            $days[$i] = Yii::$app->formatter->asDate($timestamp, 'EEEE');
+            $timestamp = strtotime('+1 day', $timestamp);
+        }
+
+        return $days;
     }
 }

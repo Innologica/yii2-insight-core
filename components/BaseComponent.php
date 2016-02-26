@@ -23,7 +23,12 @@ class BaseComponent extends Component
      * public static $settings = [
      *      'settingKey1' => 'Value 1',
      *      'settingKey2' => 'Value 2',
-     *      ...
+     *      // or like this
+     *      'settingKey2' => [
+     *          'value' => 'Some Value',
+     *          'isGlobal' => false, // true by default
+     *          'permission' => 'PermissionName'
+     *      ],
      * ];
      * ```
      *
@@ -35,6 +40,9 @@ class BaseComponent extends Component
     {
         $value = Yii::$app->registry->get($key, $userId);
         if (!isset($value) && isset(static::$settings[$key])) {
+            if (is_array(static::$settings[$key])) {
+                return static::$settings[$key]['value'];
+            }
             return static::$settings[$key];
         }
         return $value;

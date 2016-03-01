@@ -8,6 +8,7 @@
 
 namespace insight\core\web;
 
+use insight\gui\behaviors\FlashMessageBehavior;
 use Yii;
 use yii\bootstrap\ActiveForm;
 use yii\data\ActiveDataProvider;
@@ -39,7 +40,13 @@ class CrudController extends Controller
             if (Yii::$app->request->get('validate')) {
                 return ActiveForm::validate($model);
             }
-            $this->save($model);
+
+            if ($this->save($model)) {
+                Yii::$app->session->setFlash(FlashMessageBehavior::FLASH_SUCCESS, Yii::t('insight.gui', 'The record was successfuly created!'));
+            } else {
+                Yii::$app->session->setFlash(FlashMessageBehavior::FLASH_ERROR, Yii::t('insight.gui', 'Error while trying to create the record. Please contact us!'));
+            }
+            
             return ['url' => '#' . Url::to(['index'])];
         }
         
@@ -55,7 +62,13 @@ class CrudController extends Controller
             if (Yii::$app->request->get('validate')) {
                 return ActiveForm::validate($model);
             }
-            $this->save($model);
+
+            if ($this->save($model)) {
+                Yii::$app->session->setFlash(FlashMessageBehavior::FLASH_SUCCESS, Yii::t('insight.gui', 'The record was successfuly updated!'));
+            } else {
+                Yii::$app->session->setFlash(FlashMessageBehavior::FLASH_ERROR, Yii::t('insight.gui', 'Error while trying to update the record. Please contact us!'));
+            }
+            
             return ['url' => '#' . Url::to(['index'])];
         }
         
@@ -65,7 +78,12 @@ class CrudController extends Controller
 
     public function actionDelete($id)
     {
-        $this->delete($id);
+        if ($this->delete($id)) {
+            Yii::$app->session->setFlash(FlashMessageBehavior::FLASH_SUCCESS, Yii::t('insight.gui', 'The record was successfuly deleted!'));
+        } else {
+            Yii::$app->session->setFlash(FlashMessageBehavior::FLASH_ERROR, Yii::t('insight.gui', 'Error while trying to delete the record. Please contact us!'));
+        }
+
         return $this->redirect('/#' . Url::to(['index']));
     }
 
@@ -77,7 +95,7 @@ class CrudController extends Controller
         return [
             'dataProvider' => new ActiveDataProvider([
                 'query' => call_user_func([$this->modelClass, 'find']),
-            ])
+            ]),
         ];
     }
 

@@ -7,8 +7,6 @@
 
 namespace insight\core\web;
 
-use insight\gui\behaviors\FlashMessageBehavior;
-
 class Controller extends \yii\web\Controller
 {
     public $access = [];
@@ -52,8 +50,7 @@ class Controller extends \yii\web\Controller
 
         return array_merge(
             $access,
-            parent::behaviors(),
-            ['flashMessageBehavior' => FlashMessageBehavior::className()]
+            parent::behaviors()
         );
     }
 

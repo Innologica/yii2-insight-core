@@ -41,7 +41,7 @@ class CrudController extends Controller
             }
             $this->save($model);
 
-            return ['url' => '#' . Url::to(['index'])];
+            return $model;
         }
         
         $params = array_merge(['model' => $model], $this->getData($model));
@@ -58,7 +58,7 @@ class CrudController extends Controller
             }
             $this->save($model);
             
-            return ['url' => '#' . Url::to(['index'])];
+            return $model;
         }
         
         $params = array_merge(['model' => $model], $this->getData($model));
@@ -67,9 +67,7 @@ class CrudController extends Controller
 
     public function actionDelete($id)
     {
-        $this->delete($id);
-
-        return $this->redirect('/#' . Url::to(['index']));
+        return $this->delete($id);
     }
 
     protected function getData($model = null)

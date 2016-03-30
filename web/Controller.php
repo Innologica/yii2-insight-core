@@ -7,6 +7,10 @@
 
 namespace insight\core\web;
 
+use Yii;
+use yii\filters\ContentNegotiator;
+use yii\web\Response;
+
 class Controller extends \yii\web\Controller
 {
     public $access = [];
@@ -30,13 +34,23 @@ class Controller extends \yii\web\Controller
     {
         $result = parent::runAction($id, $params);
         if($result instanceof View) {
-            if (\Yii::$app->request->isAjax) {
+            if ($this->isAjax()) {
                 $result = parent::renderAjax($result->viewFile, $result->params);
             } else {
                 $result = parent::render($result->viewFile, $result->params);
             }
         }
         return $result;
+    }
+
+    public function isAjax()
+    {
+        return Yii::$app->request->isAjax;
+    }
+
+    public function setJsonResponseFormat()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
     }
 
     public function behaviors()
@@ -50,6 +64,16 @@ class Controller extends \yii\web\Controller
 
         return array_merge(
             $access,
+            [
+                'contentNegotiator' => [
+                    'class' => ContentNegotiator::className(),
+                    'formats' => [
+                        'text/html' => Response::FORMAT_HTML,
+                        'application/json' => Response::FORMAT_JSON,
+                        'application/xml' => Response::FORMAT_XML,
+                    ],
+                ],
+            ],
             parent::behaviors()
         );
     }

@@ -102,7 +102,8 @@ class CrudController extends Controller
     protected function delete($id)
     {
         $model = $this->load($id);
-        
-        return $model->delete();
+        $model->delete();
+
+        return $model;
     }
 }

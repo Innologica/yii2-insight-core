@@ -17,21 +17,17 @@ class BaseQuery extends ActiveQuery
     /**
      * @return ActiveDataProvider
      */
-    public function asDataProvider()
+    public function asDataProvider($config = [])
     {
-        return new ActiveDataProvider([
-            'query' => $this,
-        ]);
+        return new ActiveDataProvider(array_merge($config, ['query' => $this]));
     }
 
     /*
      * return ArrayDataProvider
      */
-    public function asArrayDataProvider()
+    public function asArrayDataProvider($config = [])
     {
-        return new ArrayDataProvider([
-            'models' => $this->all(),
-        ]);
+        return new ArrayDataProvider(array_merge($config, ['models' => $this->all()]));
     }
 
     /**

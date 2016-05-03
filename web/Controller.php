@@ -53,6 +53,15 @@ class Controller extends \yii\web\Controller
         Yii::$app->response->format = Response::FORMAT_JSON;
     }
 
+    public function checkAjaxAndSetResponse()
+    {
+        if ($this->isAjax()) {
+            $this->setJsonResponseFormat();
+            return true;
+        }
+        return false;
+    }
+
     public function behaviors()
     {
         if(!empty($this->access)) {

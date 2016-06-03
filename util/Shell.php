@@ -15,7 +15,8 @@ class Shell
         if(self::isWindows()) {
             pclose(popen("start $call", "r"));
         } else { // Some sort of UNIX
-            pclose(popen($call." /dev/null &", "r"));
+            //pclose(popen($call." /dev/null &", "r"));
+            exec($call . " > /dev/null &");
         }
         return true;
     }

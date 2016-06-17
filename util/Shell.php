@@ -21,6 +21,11 @@ class Shell
         return true;
     }
 
+    public static function exec($call)
+    {
+        return exec($call);
+    }
+
     public static function isWindows()
     {
         return PHP_OS == 'WINNT' || PHP_OS == 'WIN32';

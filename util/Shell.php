@@ -7,6 +7,8 @@
 
 namespace insight\core\util;
 
+use yii\helpers\Json;
+
 class Shell
 {
     public static function launch($call)
@@ -21,8 +23,14 @@ class Shell
         return true;
     }
 
-    public static function exec($call)
+    public static function exec($call, $output = false)
     {
+        if ($output) {
+            $result = [];
+            exec($call, $result);
+            // The output of the command (if any) is stored as a first element of the array
+            return !empty($result) ? Json::decode($result[0]) : [];
+        }
         return exec($call);
     }
 

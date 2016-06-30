@@ -35,13 +35,11 @@ class BaseQuery extends ActiveQuery
      * @return ActiveRecord
      * @throws NotFoundHttpException
      */
-    public function oneOrThrow($db = null)
+    public function requireOne($db = null)
     {
-        $model = parent::one($db);
-        if (!$model) {
-            throw new NotFoundHttpException();
+        if (($model = parent::one($db))) {
+            return $model;
         }
-
-        return $model;
+        throw new NotFoundHttpException();
     }
 }

@@ -24,4 +24,16 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
         }
         return false;
     }
+
+    public static function arrayFill($start_index, $num, $value)
+    {
+        if (is_object($value)) {
+            $result = [];
+            for ($i = $start_index; $i < $num; $i++) {
+                $result[$i] = clone $value;
+            }
+            return $result;
+        }
+        return array_fill($start_index, $num, $value);
+    }
 }

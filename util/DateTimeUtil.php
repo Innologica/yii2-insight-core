@@ -142,54 +142,36 @@ class DateTimeUtil extends Object
     }
 
     /**
-     * Given two dates, checks whether they form a whole week and if they,
-     * creates an array of keys, representing the indexes of the days starting of 1 (Monday)
-     * and the dates of each day as values.
+     * Given two dates, creates an array of keys, representing the indexes of the days starting
+     * of 1 (Monday) and the dates of each day as values.
      * 
-     * For example if we have 2016-08-08 and 2016-08-15 as an input, the result will be:
-     * 1 => '2016-08-08', // Monday
-     * 2 => '2016-08-09', // Tuesday
-     * ...etc until Sunday (including)
+     * For example if we have 2016-08-09 and 2016-08-10 as an input, the result will be:
+     * 2 => '2016-08-08', // Tuesday
+     * 3 => '2016-08-09', // Wednesday
      *
-     * @param string $startDate
-     * @param string $endDate
+     * @param DateTime $start
+     * @param DateTime $end
      */
-    public static function dayOfWeekToDateMap($startDate, $endDate)
+    public static function dayOfWeekToDateMap(DateTime $start, DateTime $end)
     {
-        if (!($dates = self::isWholeWeek($startDate, $endDate))) {
-            return false;
-        }
-
-        list($start, $end) = $dates;
-        
-        $interval = new DateInterval('P1D');
-        $dateRange = new DatePeriod($start, $interval, $end);
-        
-        $result = [];
-        $formatter = Yii::$app->formatter;
-        foreach ($dateRange as $date) {
-            $result[$formatter->asDate($date, 'php:N')] = $date->format('Y-m-d');
-        }
-
-        return $result;
-    }
-
-    public static function isWholeWeek($startDate, $endDate)
-    {
-        $start = new DateTime($startDate);
-        $start->modify('+1 day');
-        $end = new DateTime($endDate);
-        $end->modify('+2 days');
-        
-        if ($start->format('N') != 1) {
-            return false;
-        }
-
         $diff = $end->diff($start);
         if ($diff->d != 7) {
             return false;
         }
 
-        return [$start, $end];
+        $interval = new DateInterval('P1D');
+        $dateRange = new DatePeriod($start, $interval, $end);
+        
+        $result = [];
+        foreach ($dateRange as $date) {
+            $result[$date->format('N')] = $date->format('Y-m-d');
+        }
+
+        return $result;
+    }
+
+    public static function correctTimezone(DateTime $date)
+    {
+        $date->setTimezone(new DateTimeZone(Yii::$app->timeZone));
     }
 }

@@ -155,7 +155,7 @@ class DateTimeUtil extends Object
     public static function dayOfWeekToDateMap(DateTime $start, DateTime $end)
     {
         $diff = $end->diff($start);
-        if ($diff->d != 7) {
+        if ($diff->d > 7) {
             return false;
         }
 
@@ -170,8 +170,12 @@ class DateTimeUtil extends Object
         return $result;
     }
 
-    public static function correctTimezone(DateTime $date)
+    public static function fixTimezone($date)
     {
+        if (is_string($date)) {
+            $date = new DateTime($date, new DateTimeZone('UTC'));
+        }
         $date->setTimezone(new DateTimeZone(Yii::$app->timeZone));
+        return $date;
     }
 }

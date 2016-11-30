@@ -10,6 +10,9 @@ namespace insight\core\db;
 use yii\console\Exception;
 
 class Migration extends \yii\db\Migration{
+    const FK_CASCADE = 'CASCADE';
+    const FK_RESTRICT = 'RESTRICT';
+
     public function getTableOptions()
     {
         if ($this->db->driverName === 'mysql') {

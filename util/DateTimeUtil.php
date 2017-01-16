@@ -178,4 +178,17 @@ class DateTimeUtil extends Object
         $date->setTimezone(new DateTimeZone(Yii::$app->timeZone));
         return $date;
     }
+
+    public static function getWorkingHours($startTime, $endTime)
+    {
+        $start = new \DateTime($startTime);
+        $end = new \DateTime($endTime);
+
+        $interval = $start->diff($end);
+        if ($interval->i == 0) {
+            return $start->diff($end)->format('%h hours');
+        }
+
+        return $start->diff($end)->format('%h hours %i minutes');
+    }
 }

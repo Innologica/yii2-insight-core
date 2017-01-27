@@ -86,7 +86,7 @@ class DateTimeUtil extends Object
 
         //The total number of days between the two dates. We compute the no. of seconds and divide it to 60*60*24
         //We add one to inlude both dates in the interval.
-        $days = ($endDate - $startDate) / 86400 + 1;
+        $days = ($endDate - $startDate) / 86400;
 
         $no_full_weeks = floor($days / 7);
         $no_remaining_days = fmod($days, 7);
@@ -138,7 +138,7 @@ class DateTimeUtil extends Object
                 $workingDays--;
         }
 
-        return $workingDays;
+        return ceil($workingDays);
     }
 
     /**

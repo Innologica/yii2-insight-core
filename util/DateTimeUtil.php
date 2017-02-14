@@ -186,9 +186,9 @@ class DateTimeUtil extends Object
 
         $interval = $start->diff($end);
         if ($interval->i == 0) {
-            return $start->diff($end)->format('%h hours');
+            return $start->diff($end)->format('%h h');
         }
 
-        return $start->diff($end)->format('%h hours %i minutes');
+        return $start->diff($end)->format('%h h %i m');
     }
 }

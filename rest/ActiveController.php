@@ -30,13 +30,13 @@ class ActiveController extends BaseActiveController
     public function actions()
     {
         $actions = parent::actions();
-        if(\Yii::$app->request->get('filter'))
+        if(\Yii::$app->request->get($this->filterParam))
             $actions['index']['prepareDataProvider'] = function ($action) {
                 /* @var $modelClass \yii\db\BaseActiveRecord */
                 $modelClass = $this->modelClass;
 
                 $query = $modelClass::find();
-                $filters = \Yii::$app->request->get('filter');
+                $filters = \Yii::$app->request->get($this->filterParam);
 
                 foreach($filters as $filter) {
                     if(is_array($filter)) {

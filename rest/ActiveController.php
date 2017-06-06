@@ -30,28 +30,33 @@ class ActiveController extends BaseActiveController
     public function actions()
     {
         $actions = parent::actions();
-        if(\Yii::$app->request->get($this->filterParam))
-            $actions['index']['prepareDataProvider'] = function ($action) {
-                /* @var $modelClass \yii\db\BaseActiveRecord */
-                $modelClass = $this->modelClass;
-
-                $query = $modelClass::find();
-                $filters = \Yii::$app->request->get($this->filterParam);
-
-                foreach($filters as $filter) {
-                    if(is_array($filter)) {
-                        $function = key($filter);
-                        $query = call_user_func_array([$query, $function], $filter[$function]);
-                    } else {
-                        $query = call_user_func([$query, $filter]);
-                    }
-                }
-
-                return new ActiveDataProvider([
-                    'query' => $query,
-                ]);
-            };
+        $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
         return $actions;
+    }
+
+    public function prepareDataProvider($action)
+    {
+        /* @var $modelClass \yii\db\BaseActiveRecord */
+        $modelClass = $this->modelClass;
+
+        $query = $modelClass::find();
+        $filters = \Yii::$app->request->get($this->filterParam);
+
+        if (\Yii::$app->request->get($this->filterParam)) {
+            foreach ($filters as $filter) {
+                if (is_array($filter)) {
+                    $function = key($filter);
+                    $query = call_user_func_array([$query, $function], $filter[$function]);
+                } else {
+                    $query = call_user_func([$query, $filter]);
+                }
+            }
+        }
+
+
+        return new ActiveDataProvider([
+            'query' => $query,
+        ]);
     }
 
 }

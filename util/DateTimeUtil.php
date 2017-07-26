@@ -58,7 +58,6 @@ class DateTimeUtil extends Object
 
     public static function listWeekdays()
     {
-        Yii::$app->language = 'ru';
         $timestamp = strtotime('next Sunday');
         $days = array();
         for ($i = 0; $i < 7; $i++) {

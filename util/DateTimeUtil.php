@@ -79,8 +79,8 @@ class DateTimeUtil extends Object
      */
     public static function getWorkingDays($startDate, $endDate, $holidays = []){
         // do strtotime calculations just once
-        $endDate = strtotime($endDate);
-        $startDate = strtotime($startDate);
+        $endDate = strtotime($endDate." UTC");
+        $startDate = strtotime($startDate." UTC");
 
 
         //The total number of days between the two dates. We compute the no. of seconds and divide it to 60*60*24

@@ -78,10 +78,28 @@ class DateTimeUtil extends Object
      * @return float|int
      */
     public static function getWorkingDays($startDate, $endDate, $holidays = []){
-        // do strtotime calculations just once
-        $endDate = strtotime($endDate." UTC");
-        $startDate = strtotime($startDate." UTC");
+        $workingDays = [1, 2, 3, 4, 5]; # date format = N (1 = Monday, ...)
 
+        $from = new DateTime($startDate. " UTC");
+        $to = new DateTime($endDate. " UTC");
+        //$to->modify('+1 day');
+        $interval = new DateInterval('P1D');
+        $periods = new DatePeriod($from, $interval, $to);
+
+        $days = 0;
+        foreach ($periods as $period) {
+            if (!in_array($period->format('N'), $workingDays)) continue;
+            if (in_array($period->format('Y-m-d'), $holidays)) continue;
+//            if (in_array($period->format('*-m-d'), $holidays)) continue;
+            $days++;
+        }
+        return $days;
+    }
+
+    public static function getWorkingDays2($startDate, $endDate, $holidays = []){
+        // do strtotime calculations just once
+        $endDate = strtotime(($endDate) . " UTC");
+        $startDate = strtotime($startDate . "UTC");
 
         //The total number of days between the two dates. We compute the no. of seconds and divide it to 60*60*24
         //We add one to inlude both dates in the interval.

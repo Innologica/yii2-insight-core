@@ -12,9 +12,9 @@ use DatePeriod;
 use DateTime;
 use DateTimeZone;
 use Yii;
-use yii\base\Object;
+use yii\base\BaseObject;
 
-class DateTimeUtil extends Object
+class DateTimeUtil extends BaseObject
 {
     /**
      * List all time zones grouped by region. Useful for dropdown items fill.

@@ -3,14 +3,14 @@
  * Created by PhpStorm.
  * User: Nikola nb
  * Date: 23.12.2015
- * Time: 22:26 ÷.
+ * Time: 22:26 ï¿½.
  */
 
 namespace insight\core\web;
 
-use yii\base\Object;
+use yii\base\BaseObject;
 
-class View extends Object
+class View extends BaseObject
 {
     public $viewFile;
     public $params;
